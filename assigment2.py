@@ -18,7 +18,7 @@ except FileNotFoundError:
 # Each row of the CSV file should be a key-value pair in the dictionary.
 
 csv_list = []
-with open("../weather_data.csv") as data_file:
+with open("weather_data.csv") as data_file:
     content = csv.reader(data_file)
     header = next(content)
 
@@ -73,7 +73,7 @@ print(f"Hexadecimal data written to {output_file_path}")
 
 numbers_sum = 0
 try:
-    with open("../test4.txt", "r") as cal:
+    with open("test4.txt", "r") as cal:
         for line in cal:
             numbers_sum += int(line)
 

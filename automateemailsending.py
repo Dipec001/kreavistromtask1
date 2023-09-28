@@ -9,7 +9,7 @@ import logging
 import config
 
 
-logging.basicConfig(filename="email_log.txt", level=logging.INFO)
+logging.basicConfig(filename="../task2/email_log.txt", level=logging.INFO)
 
 MY_EMAIL = config.MY_EMAIL
 MY_PASSWORD = config.MY_PASSWORD
