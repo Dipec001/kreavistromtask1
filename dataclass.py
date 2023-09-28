@@ -2,7 +2,6 @@ from dataclasses import dataclass
 import sqlite3
 
 
-# Define the Employee data class
 @dataclass
 class Employee:
     employee_id: int
@@ -18,7 +17,6 @@ class EmployeeManagementSystem:
         self.conn = sqlite3.connect(db_file)
         self.cursor = self.conn.cursor()
 
-        # Create an employees' table if it doesn't exist
         self.cursor.execute('''CREATE TABLE IF NOT EXISTS employees
                             (employee_id INTEGER PRIMARY KEY,
                              name TEXT,
@@ -27,7 +25,6 @@ class EmployeeManagementSystem:
                              salary TEXT)''')
         self.conn.commit()
 
-        # Initialize next_employee_id
         self.next_employee_id = self.get_next_employee_id()
 
     def get_next_employee_id(self):
@@ -46,24 +43,22 @@ class EmployeeManagementSystem:
 
             if not name:
                 print("Name cannot be empty. Please enter a name.")
-                continue  # Repeat the loop to get a valid name
+                continue
 
             age = input("Age: ")
             department = input("Department: ")
             salary = input("Salary: ")
 
-            # Create an Employee object with a unique employee_id
             employee = Employee(self.next_employee_id, name, age, department, salary)
             self.next_employee_id += 1
 
-            # Insert the new employee into the database
             self.cursor.execute(
                 "INSERT INTO employees (employee_id, name, age, department, salary) VALUES (?, ?, ?, ?, ?)",
                 (employee.employee_id, employee.name, employee.age, employee.department, employee.salary))
             self.conn.commit()
 
             print(f"Employee {employee.name} added successfully with ID {employee.employee_id}!")
-            break  # Exit the loop if a valid name is provided
+            break
 
     def display_all_employees(self):
         self.cursor.execute("SELECT * FROM employees")
@@ -162,7 +157,6 @@ class EmployeeManagementSystem:
     def search_employee(self):
         name_to_search = input('Please enter the name of the employee you are searching for:').lower()
 
-        # Query the database for employees with the specified name
         self.cursor.execute("SELECT * FROM employees WHERE name = ?", (name_to_search,))
         matching_employees = self.cursor.fetchall()
 
@@ -176,7 +170,6 @@ class EmployeeManagementSystem:
 
         selected_id = int(input("Enter the ID of the employee to view details: "))
 
-        # Find the employee with the selected ID in the matching employees
         selected_employee = None
         for emp in matching_employees:
             if emp[0] == selected_id:
