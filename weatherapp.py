@@ -22,7 +22,7 @@ def get_weather_data(api_key, location):
 
 # Step 2: Parse JSON Data
 def parse_weather_data(data):
-    # Extract relevant weather information from the JSON data
+    """Extracting relevant weather information from the JSON data"""
     weather_description = data['weather'][0]['description']
     temperature = data['main']['temp']
     icon_name = data['weather'][0]['main'].lower()
@@ -43,7 +43,6 @@ def create_weather_app():
     location_entry = tk.Entry(app)
     location_entry.pack()
 
-    # Create label for displaying current time
     time_label = tk.Label(app, text="", font=("Helvetica", 16))
     time_label.pack()
 
@@ -59,7 +58,6 @@ def create_weather_app():
             pressure_label.config(text=f"Pressure: {pressure}hpa")
             humidity_label.config(text=f"Humidity: {humidity}%")
 
-            # Replace the 'icon_path' line in the 'update_weather' function with this code
             icon_code = weather_data['weather'][0]['icon']
             icon_url = f"http://openweathermap.org/img/wn/{icon_code}.png"
             icon_data = requests.get(icon_url, stream=True)
@@ -72,14 +70,13 @@ def create_weather_app():
                 icon_label.config(image=weather_icon)
                 icon_label.image = weather_icon
 
-            # Update the current time label
             current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             time_label.config(text=f"Current Time: {current_time}")
         except requests.exceptions.RequestException as e:
-            # Handle API request errors (e.g., connection error)
+            # Handle API request errors
             print(f"API Request Error: {e}")
         except KeyError as e:
-            # Handle JSON parsing errors (e.g., missing data)
+            # Handle JSON parsing errors
             print(f"JSON Parsing Error: {e}")
         except Exception as e:
             # Handle other unexpected errors
@@ -94,9 +91,9 @@ def create_weather_app():
     temperature_label = tk.Label(app, text="")
     temperature_label.pack()
 
-    empty_image = ImageTk.PhotoImage(Image.new("RGB", (1, 1)))  # Create an empty ImageTk
+    empty_image = ImageTk.PhotoImage(Image.new("RGB", (1, 1)))
     icon_label = tk.Label(app, image=empty_image)
-    icon_label.image = empty_image  # Assign it to the label
+    icon_label.image = empty_image
     icon_label.pack()
 
     pressure_label = tk.Label(app, text="")
